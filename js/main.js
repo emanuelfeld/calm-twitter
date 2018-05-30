@@ -1,6 +1,6 @@
 (function () {
   'use strict'
-  
+
   let tweetBoxToolbar = null
   let tweetButton = null
   let draftButton = null
@@ -9,25 +9,39 @@
   let pauseRetweet = false
   let pauseReply = false
 
-  if (!!window.chrome) {
+  if (window.chrome) {
     window.browser = window.chrome
   } else {
     window.browser = browser
   }
 
   window.browser.storage.sync.get(['testSync'], function (res) {
-    let browserStorage
-    try {
-      let syncEnabled = res.testSync
-      browserStorage = window.browser.storage.sync
-    } catch (e) {
-      browserStorage = window.browser.storage.local
-    }
+    let browserStorage = window.browser.storage.local
 
     browserStorage.get(['tweet', 'retweet', 'reply'], function (settings) {
       pauseTweet = settings.tweet
       pauseRetweet = settings.retweet
       pauseReply = settings.reply
+
+      // Monitor homepage loading and main homepage tweet box attributes
+      let href = document.location.href
+      if (pauseTweet && (href === 'https://twitter.com/' || href.startsWith('https://twitter.com/?'))) {
+        new MutationObserver(function () {
+          let homeTweetBox = document.getElementById('tweet-box-home-timeline')
+          if (homeTweetBox) {
+            this.disconnect()
+            let homeTweetBoxObserver = new MutationObserver(function () {
+              if (homeTweetBox.classList.contains('is-showPlaceholder')) {
+                homeTweetBox.click()
+                tweetBoxToolbar = homeTweetBox.closest('div.timeline-tweet-box').querySelector('.TweetBoxToolbar')
+                tweetButton = tweetBoxToolbar.querySelector('button.tweet-action')
+                addDraftButton()
+              }
+            })
+            homeTweetBoxObserver.observe(homeTweetBox, {attributes: true})
+          }
+        }).observe(document.body, {childList: true})
+      }
     })
   })
 
@@ -57,9 +71,6 @@
   }
 
   Animation.prototype = {
-    show: function () {
-      this.overlay.style.display = 'block'
-    },
     start: function () {
       this.overlay.style.display = 'block'
       this.innerCircle.setAttribute('breathe', 'true')
@@ -82,7 +93,7 @@
       draftButton.className = 'EdgeButton EdgeButton--primary'
       draftButton.id = 'tweet-zen-draft-button'
       draftButton.querySelectorAll('span').forEach(function (element) {
-        element.textContent = 'Contemplate'
+        element.textContent = 'Consider'
         element.className = element.className + ' tweet-zen-draft-span'
       })
 
@@ -107,12 +118,7 @@
   function clickedDraft (elem) {
     if (elem.id === 'tweet-zen-draft-button' || elem.closest('#tweet-zen-draft-button')) {
       console.log('draft')
-      let animation = new Animation()
-      animation.start()
-      setTimeout(function () {
-        animation.stop()
-        hideDraftButton()
-      }, 14000)
+      return true
     }
   }
 
@@ -156,28 +162,6 @@
     }
   }
 
-  // Monitor homepage loading and main homepage tweet box attributes
-
-  let href = document.location.href
-
-  if (pauseTweet && (href === 'https://twitter.com/' || href.startsWith('https://twitter.com/?'))) {
-    new MutationObserver(function () {
-      let homeTweetBox = document.getElementById('tweet-box-home-timeline')
-      if (homeTweetBox) {
-        this.disconnect()
-        let homeTweetBoxObserver = new MutationObserver(function () {
-          if (homeTweetBox.classList.contains('is-showPlaceholder')) {
-            homeTweetBox.click()
-            tweetBoxToolbar = homeTweetBox.closest('div.timeline-tweet-box').querySelector('.TweetBoxToolbar')
-            tweetButton = tweetBoxToolbar.querySelector('button.tweet-action')
-            addDraftButton()
-          }
-        })
-        homeTweetBoxObserver.observe(homeTweetBox, {attributes: true})
-      }
-    }).observe(document.body, {childList: true})
-  }
-
   // Register on keydown until see first tweet/RT/reply click
 
   let _listener = function () {
@@ -190,7 +174,12 @@
 
   document.addEventListener('click', function (event) {
     if (clickedDraft(event.srcElement)) {
-      // pass
+      let animation = new Animation()
+      animation.start()
+      setTimeout(function () {
+        animation.stop()
+        hideDraftButton()
+      }, 14000)
     } else if (clickedRetweet() || clickedTweet() || clickedReply()) {
       document.removeEventListener('keydown', _listener, true)
       addDraftButton()
