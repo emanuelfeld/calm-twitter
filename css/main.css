@@ -1,0 +1,74 @@
+#twitter-zen-overlay {
+    opacity: 0.95;
+    background-color: white;
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index:10000;
+}
+
+#twitter-zen-circle-container {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#twitter-zen-circle-outer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 1000px;
+    opacity: 1;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid black;
+}
+
+#twitter-zen-text-inner {
+    font-size: 2em;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    opacity: 0.95;
+    color: white;
+    height: 30%;
+    width: 100%;
+    line-height: 0;
+}
+
+#twitter-zen-circle-inner {
+    font-size: 2em;
+    padding: auto 0 auto 0;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 1000px;
+    opacity: 0.2;
+    transform: scale(0.2);
+    background-color: #6495ed;
+}
+
+#twitter-zen-circle-inner[breathe="true"] {
+    animation-name: breathe;
+    animation-duration: 3000ms; /* or: Xms */
+    animation-iteration-count: 4;
+    animation-direction: alternate; /* or: normal */
+    animation-timing-function: linear; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+}
+
+@keyframes breathe {
+    0%, 10% {
+        transform: scale(0.2);
+        opacity: 0.2;
+    }
+    90%, 100% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "manifest_version": 2,
+    "name": "Calm Twitter",
+    "version": "0.0.1",
+    "author": "Emanuel Feld",
+    "background": {
+        "scripts": []
+    },
+    "options_ui": {
+        "page": "index.html",
+        "chrome_style": true
+    },
+    "web_accessible_resources": [
+        "js/main.js",
+        "js/options.js"
+    ],
+    "icons": {
+        "16": "img/16.png",
+        "48": "img/48.png",
+        "128": "img/128.png"
+    },
+    "content_scripts": [
+        {
+            "css": [
+                "css/main.css"
+            ],
+            "js": [
+                "js/main.js"
+            ],
+            "matches": [
+                "https://*.twitter.com/*"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "https://*.twitter.com/*",
+        "storage"
+    ],
+    "offline_enabled": false
+}

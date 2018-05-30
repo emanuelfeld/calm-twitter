@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calm Twitter Options</title>
+    <style>
+        body { 
+            padding: 0 20px 10px 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        h2 { 
+            color: #be2026; 
+        }
+        a { 
+            font-weight: bold; 
+        }
+        ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+        }
+        li { 
+            padding: 2px; 
+        }
+        button:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <h2>Preferences</h2>
+        
+        <p>
+        	Include meditative pause: 
+            <ul>
+                <li>
+                    <label><input type="checkbox" id="tweet">&nbsp;before tweeting</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" id="retweet">&nbsp;before retweeting</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" id="reply">&nbsp;before replying</label>
+                </li>
+            </ul>
+        </p>
+
+        <button id="save">Save Options</button>
+        <p>
+            <div id="status"></div>
+        </p>
+    </section>
+
+    <script type="text/javascript" src="js/options.js"></script>
+</body>
+</html>
