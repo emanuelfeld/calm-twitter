@@ -1,18 +1,20 @@
 {
     "manifest_version": 2,
     "name": "Calm Twitter",
-    "version": "0.0.1",
+    "description": "Encourages you to stop for a breath before you send each tweet.",
+    "version": "0.0.2",
     "author": "Emanuel Feld",
     "background": {
         "scripts": []
     },
     "options_ui": {
-        "page": "index.html",
+        "page": "options.html",
         "chrome_style": true
     },
     "web_accessible_resources": [
         "js/main.js",
-        "js/options.js"
+        "js/options.js",
+        "options.html"
     ],
     "icons": {
         "16": "img/16.png",
@@ -36,6 +38,5 @@
     "permissions": [
         "https://*.twitter.com/*",
         "storage"
-    ],
-    "offline_enabled": false
+    ]
 }

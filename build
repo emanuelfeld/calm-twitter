@@ -1,0 +1,20 @@
+#!/bin/bash
+
+main_dir="extension"
+new_dir=$main_dir-dist
+
+rm -rf $new_dir || true
+
+cp -r $main_dir $new_dir
+
+script_dir="$new_dir/js"
+
+for file in $script_dir/*.js; do
+    filename=${file##*/}
+    grep -v "console.log" < "$script_dir/$filename" > "$script_dir/tmp_$filename"
+    mv "$script_dir/tmp_$filename" "$file"
+done
+
+rm -f $new_dir/.DS_STORE
+zip -r $new_dir $new_dir
+rm -rf $new_dir
