@@ -1,2 +1,5 @@
+*.zip
 extension-dist/*
+extension-dist-chrome/*
+extension-dist-firefox/*
 .DS_STORE

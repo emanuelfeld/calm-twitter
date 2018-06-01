@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Calm Twitter",
     "description": "Encourages you to stop for a breath before you send each tweet.",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "author": "Emanuel Feld",
     "background": {
         "scripts": []

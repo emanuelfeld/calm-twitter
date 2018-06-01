@@ -16,5 +16,8 @@ for file in $script_dir/*.js; do
 done
 
 rm -f $new_dir/.DS_STORE
-zip -r $new_dir $new_dir
+zip -r $new_dir-chrome $new_dir
+cd $new_dir
+zip -r ../$new_dir-firefox *
+cd ..
 rm -rf $new_dir

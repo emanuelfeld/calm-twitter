@@ -56,8 +56,7 @@
       breathLength = parseFloat(res.breathLength) * 1000
       breathPause = parseFloat(res.breathPause) * 1000
 
-      console.log('calm twitter:', 'tweet', pauseTweet, 'retweet', pauseRetweet, 'reply', pauseReply, 
-        'count', breathCount, 'speed', breathLength, 'pause', breathPause)
+      console.log('calm twitter:', 'tweet', pauseTweet, 'retweet', pauseRetweet, 'reply', pauseReply, 'count', breathCount, 'speed', breathLength, 'pause', breathPause)
     })
 
   let tweetButtonObserver = new MutationObserver(function () {
@@ -130,6 +129,8 @@
   // Click Events
 
   function clickedDraft (elem) {
+    if (draftButton.disabled) return false
+
     if (elem.id === 'tweet-zen-draft-button' || elem.closest('#tweet-zen-draft-button')) {
       console.log('calm twitter:', 'draft')
       return true
